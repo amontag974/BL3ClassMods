@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Class Mod Chance Calculator</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/styles.css"
+    </head>
+    <body>
+        <div class="container text-center">
+            <div class="container">
+                <h1>Choose your:</h1>
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-4">
+                        <label for="char-select">Character</label>
+                        <select name="characters" class="form-control">
+                            <option value="">--Character--</option>
+                            <option value="Amara">Amara</option>
+                            <option value="Fl4k">Fl4k</option>
+                            <option value="Moze">Moze</option>
+                            <option value="Zane">Zane</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="mod-select">Class Mod</label>
+                        <select name="class-mods" class="form-control">
+                            <option value="">--Class Mod--</option>
+                        </select>
+                    </div>                    
+                </div>
+            </div>
+            <div class="container">
+                <h2 class="command-select">Enter the amount of desired points. Total must not be more than 5</h2>
+                <div class="container container-fluid justify-content-md-center">
+                    <div class='row skills'>
+                        <div id="skill1" class="col-sm-4 text-center">
+                        </div>
+                        <div id="skill2" class="col-sm-4 text-center">
+                        </div>
+                        <div id="skill3" class="col-sm-4 text-center">
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <button>Give Me My Odds</button>
+                        </div>                        
+                    </div>                    
+                </div>            
+                <div class="container ">
+                    <h2 class="chance-text"></h2>
+                </div>
+            </div>
+        </div>
+        
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="index.js"></script>
+        
+    </body>
+</html>

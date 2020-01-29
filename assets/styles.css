@@ -1,0 +1,40 @@
+body {
+    background-color: #1f2f46;
+    color: white;
+}
+
+img {
+    border-radius: 3px;
+}
+
+label {
+    font-size: 3rem;
+}
+
+.container, button {
+    margin-top: 50px;
+}
+
+.command-select, button {
+    display: none;
+}
+
+.icon {
+    width: 90px;
+    height: 90px;
+}
+
+.green {
+    background-color: #4d8412;
+    border: solid #273c0f;
+}
+
+.blue {
+    background-color: #225c89;
+    border: solid #13304f;
+}
+
+.red {
+    background-color: #bf6d12;
+    border: solid #582f1b;
+}
