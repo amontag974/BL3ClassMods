@@ -4,6 +4,6 @@ Step 1: Pick your character. This will populate the class mod select list and it
 
 Step 2: Pick the class mod that you want.
 
-Step 3: Choose the amount of desired points you want in each skill. You cannot have more than 5 points total between all three skills. You can choose less than 5 if you have no preference where the other points go.
+Step 3: Choose the amount of desired points you want in each skill. You will not be allowed to have more than 5 points between the three skills. The numbers in the select box will change based on your point selections.
 
 Step 4. Click the button to see the odds of getting that class mod roll.
