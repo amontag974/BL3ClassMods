@@ -1248,6 +1248,18 @@ const classMods = {
 
 //-------------//
 
+const [s1, s2, s3] = [$('#skill1'), $('#skill2'), $('#skill3')];
+const skillContainers = [s1,s2,s3];
+
+skillContainers.forEach((container,index) => {
+    container.append(`<img id='s${index+1}-img' hidden>\
+                        <p id='s${index+1}-name'></p>\
+                        <p id='s${index+1}-limit'></p>\
+                        <select id='s${index+1}-select' hidden>`);
+});
+
+
+
 $("select[name='characters']").change(function(){
     const modSelect = $("select[name='class-mods']")
     const selectedCharacter = $("select[name='characters'] option:selected").val();
@@ -1266,34 +1278,67 @@ $("select[name='characters']").change(function(){
 $("select[name='class-mods']").change(function(){
     const selectedMod = $("select[name='class-mods'] option:selected").val();
     const selectedCharacter = $("select[name='characters'] option:selected").val();
-    const [s1, s2, s3] = [$('#skill1'), $('#skill2'), $('#skill3')];
-    const skillContainers = [s1,s2,s3];
-    $(".command-select").show();
-    $('button').show();
-
+    
     function getModInfo(mod) {
         if (mod.modName === selectedMod) {
             skillContainers.forEach( (container,index) => {
-                let skill = `skill${index+1}`
-                console.log(mod.skills[skill]);
-                container.empty();
-                container.append(`<img class='skill-img ${mod.skills[skill].color} icon' src='${mod.skills[skill].img}' alt=${mod.skills[skill].name}>\
-                                    <p class='skill-name'>${mod.skills[skill].name}</p>\
-                                    <p class='skill-limit'>${mod.skills[skill].limit}</p>\
-                                    <input type='number' value='0' id='s${index+1}-input' max='${mod.skills[skill].limit}' maxlength='1'>`);
+                let skill = `skill${index+1}`;
+                $(`#s${index+1}-img`).attr('src',`${mod.skills[skill].img}`);
+                $(`#s${index+1}-img`).removeClass();
+                $(`#s${index+1}-select`).removeClass();
+                $(`#s${index+1}-img`).addClass(`${mod.skills[skill].color} icon`);
+                $(`#s${index+1}-name`).text(`${mod.skills[skill].name}`);
+                $(`#s${index+1}-limit`).text(`Max: ${mod.skills[skill].limit}`);
+                $(`#s${index+1}-select`).empty();
+                $(`#s${index+1}-select`).append(createOptions(mod.skills[skill].limit) + "</select>");
+                $(`#s${index+1}-select`).addClass(`limit-${mod.skills[skill].limit}`);
             });
         }
     }
 
     classMods[selectedCharacter].legendary.forEach(getModInfo);
     classMods[selectedCharacter].purple.forEach(getModInfo);
+    $('div.skills *').removeAttr('hidden');
+    $(".command-select").show();
+    $('button').show();
     
 });
 
+function getSelectedValues() {
+    const s1Count = parseInt($('#s1-select').val());
+    const s2Count = parseInt($('#s2-select').val());
+    const s3Count = parseInt($('#s3-select').val());
+    return [s1Count,s2Count,s3Count];
+}
+
+$('#s1-select, #s2-select, #s3-select').change((e)=>{
+    const selectedValues = getSelectedValues();
+    const totalCount = selectedValues.reduce((accumulator, currentValue)=>accumulator + currentValue);
+    const freePoints = 5 - totalCount;
+
+    for (let i=1; i<=3; i++) {
+        if (!(e.target.id === `s${i}-select`)) {
+            const skillLimit = parseInt($(`#s${i}-select`).attr('class').slice(-1));
+            $(`#s${i}-select`).empty();
+            $(`#s${i}-select`).append(createOptions((selectedValues[i-1] + freePoints) > skillLimit ? skillLimit : (selectedValues[i-1] + freePoints)));
+            $(`#s${i}-select option[value='${selectedValues[i-1]}']`).attr('selected',true);
+        }
+    }
+});
+
+function createOptions(limit, start=0) {
+    optionsList = "";
+    for (let i = start; i<= limit; i++) {
+        optionsList = optionsList + `<option value='${i}'>${i}</option>`
+    }
+    return optionsList;
+}
+
+
 $('button').click(function(){
-    const s1Count = parseInt($('#s1-input').val());
-    const s2Count = parseInt($('#s2-input').val());
-    const s3Count = parseInt($('#s3-input').val());
+    const s1Count = parseInt($('#s1-select').val());
+    const s2Count = parseInt($('#s2-select').val());
+    const s3Count = parseInt($('#s3-select').val());
     const totalCount = s1Count + s2Count + s3Count;
     if (totalCount > 5) {
         console.log("Total is greater than 5. Not Allowed");
@@ -1305,8 +1350,8 @@ $('button').click(function(){
 
 function findPercentage() {
     let totalCombos = createSet();
-    let maxPoints = [$('#s1-input').attr('max'),$('#s2-input').attr('max'),$('#s3-input').attr('max')];
-    let specifiedPoints = [$('#s1-input').val(),$('#s2-input').val(),$('#s3-input').val()];
+    let maxPoints = [parseInt($(`#s1-select`).attr('class').slice(-1)),parseInt($(`#s2-select`).attr('class').slice(-1)),parseInt($(`#s3-select`).attr('class').slice(-1))];
+    let specifiedPoints = [$('#s1-select').val(),$('#s2-select').val(),$('#s3-select').val()];
 
     maxPoints = maxPoints.map(pointValue => parseInt(pointValue));
     specifiedPoints = specifiedPoints.map(pointValue => parseInt(pointValue));
